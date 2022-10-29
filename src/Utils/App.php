@@ -6,15 +6,15 @@ class App
 {
     public function __construct()
     {
-        // Старт сессии
+        // Session start
         session_start();
 
-        // Создаем класс с нашими эксепшонами, что бы они подключились
+        // We create a class with our exceptions so that they connect
         new ErrorHandler();
 
-        // Подключаем наш роутер (маршрутизатор)
+        // We connect our router (router)
        $router = new Router();
-        // Запускаем метод
+        // Run the method
         $router->process();
 
     }

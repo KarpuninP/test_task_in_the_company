@@ -8,11 +8,9 @@ class OrderController extends Controller
 {
     public function index(): void
     {
-        // Проверяем что пришло
 //        var_dump($_POST['id']);
-        // Если нечего не пришло то ставим строку
         $post = $_POST['id'] ?? '';
-        // Проверяем если неравно пустоте, то мы масив переводим в строку и засовываем в куки на час
+        // We check if it is not empty, then we translate the array into a string and put it in cookies for an hour
         if ($post !== '') {
             $order = implode(',' , $post);
             setcookie('getOrder', $order, time() + 60 * 60);
@@ -20,14 +18,13 @@ class OrderController extends Controller
 
        var_dump($_COOKIE['getOrder']);
 
-        // обычное отражение для странице
+        // Normal reflection for the page
         $data = [];
         $this-> setMeta (
-            'Главная страница',
-            'Тестовое задание',
-            'тест, интернет магазин'
+            'Main page',
+            'Test task',
+            'test, online store, filters'
         );
-        // возвращает к подключению шаблон и передача данных
         $this->view('order.order', $data);
     }
 }

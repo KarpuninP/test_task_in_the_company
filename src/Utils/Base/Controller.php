@@ -7,14 +7,9 @@ use App\Utils\App;
 
 abstract class Controller
 {
-
-    // название папки шаблон
     public $template = '';
-    // название самого шаблона
     public $layout = 'shop';
-    // Тут будет хранится данные
     public $data = [];
-    // Тут будут мета даный хранится тайтл, дескрипшон
     public $meta = [
         'meta_author' => 'Karpunin Pavel',
         'meta_copyright' => 'amedomaro2@gmail.com',
@@ -32,16 +27,16 @@ abstract class Controller
         $this->db = new Shop();
     }
 
-    // Для отрендование странички. Получаем параметры от базового контролера и перекидываем это class View
+    // For page rendering. We receive parameters from the base controller and throw this class View
     public function getView(): void
     {
-        //создаем обьект класса View и передаем туда параметры этого класса
+        // Create an object of the View class and pass the parameters of this class there
         $viewObject = new View($this->layout, $this->template, $this->meta);
         $viewObject->show($this->data);
 
     }
 
-    // формировать мето данные
+    // Generate metadata
     public function setMeta($title = '', $desc = '', $keywords = ''): void
     {
         $this->meta['title'] = $title;
@@ -49,12 +44,10 @@ abstract class Controller
         $this->meta['keywords'] = $keywords;
     }
 
-    // работа с датой
+    // Work with date
     public function view(string $template, array $data = []): void
     {
-        // передаем название папки
         $this->template = $template;
-        // засовываем все в свойства
         $this->data['siteData'] = $data;
     }
 

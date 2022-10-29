@@ -4,22 +4,21 @@ namespace App\Utils;
 
 class Router
 {
-    // тут старт
+    // start here
     public function process(): void
     {
-            // Получаем массив с полным путем контролера и название метода, которые хотим дернуть (получили это все в url)
+            // We get an array with the full path of the controller and the name of the method that we want to pull (we got it all in the url)
             $action = $this->getAction();
-            // Определяем это у нас полный путь контролера
+            // We define it in our full path of the controller
             $controller = $action[0];
-            // Определяем это у нас название метода
+            // We define this as the name of the method
             $method = $action[1];
-            //Смотрем какой у нас метод и путь контролера
 //          var_dump($method . ' - ' . $controller);
-            // Создаем контролер
+            // Create a controller
             $object = new $controller;
-            // Запускаем метод
+            // Run the method
             $object->$method();
-            // запускаем базовый шаблон
+            // Run base template
         if($controller !== '\App\Controller\ApiController') {
             $object->getView();
         }
@@ -28,41 +27,33 @@ class Router
     /**
      * @throws \Exception
      */
-    // Разбивает url сылку и возрашает массивом название контролера и метода.
+    // Breaks the url link and returns the name of the controller and method as an array.
     private function getAction(): array
     {
-        // Получаем PATH от ссылки
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        // Разбиваем ссылку на массив по элементам. 0 ключ - это пустота, 1 - контролер, 2 - экшон(метод)
+        // We split the reference to the array by elements. 0 key is empty, 1 is controller, 2 is action(method)
         $url = explode('/', $url);
-        // Формируем полный неймспейс класса
-        // Если 1 ключ массива будет пустой, то запускаем HomeController
+
         if (empty($url[1])) {
             $controller = '\App\Controller\HomeController';
-            // Если там что, то есть, то формируем полный путь этого контролера и пишем с заглавной буквы, и присоединяем слово Controller
         } else {
             $controller = '\App\Controller\\' . ucfirst($url[1]) . 'Controller';
-            // Если такого класса не существует, то выдаем эксепшон (проверка на наличие класса)
             if (!class_exists($controller)) {
-                throw new \Exception('Нет такого класса: ' . '"' . $controller . '"', 404);
+                throw new \Exception('No such class: ' . '"' . $controller . '"', 404);
             }
         }
 
-        // Если 2 ключ массива пуст, то метод будет index
         if (empty($url[2])) {
             $method = 'index';
-            // Иначе название второго масива
         } else {
             $method = $url[2];
             //var_dump($method);
         }
        // var_dump($method);
-        // (проверка на наличие класса и в нем контролера) Если нет такого метода в классе, то выкидываем эксепшон
         if (!method_exists($controller, $method)) {
-            throw new \Exception('Нет метода: "' . $method  . '" в классе: ' . '"' . $controller . '"', 404);
+            throw new \Exception('No method: "' . $method  . '" in the class: ' . '"' . $controller . '"', 404);
         }
 
-        // Возрашаем полный путь контролера и название метода в массиве.
         return [$controller, $method];
     }
 }

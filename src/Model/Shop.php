@@ -9,14 +9,12 @@ class Shop extends Model
 {
     public function getAllSort(string $sortingCheck, array $priceArr, array $categoriesArrCheck): array
     {
-        //Проверяем что пришло
 //        var_dump($sortingCheck);
 //        var_dump($priceArr);
 //        var_dump($categoriesArrCheck);
 
-        // Формируем запрос к нашему запросу сортировки
+        // We form a request to our sort request
         $categoriesMysql = '';
-        // Если масив не пустой то проходимся по масиву и создаем строку подставляя нужные элементы
         if (!empty($categoriesArrCheck)) {
             foreach ($categoriesArrCheck as $k => $v) {
                if ($k == 'RAM_id') {
@@ -32,7 +30,7 @@ class Shop extends Model
         }
 //        var_dump($categoriesMysql);
 
-        // формируем строку и вставляем данные (sql иньекции) Генерируем запрос к базе данных
+        // Form a string and insert data (sql injection) Generate a query to the database
         $sql = sprintf('SELECT products.Product_id, products.ProductName, products.Description, products.Picture, products.Price,
                         ram.RAM_name, display.Display_name, manufacturer.Manufacturer_name, color.Color_name, products.Date
                         FROM products
@@ -42,7 +40,7 @@ class Shop extends Model
                             JOIN color ON products.Color_id = color.Color_id 
                         WHERE products.Price > ? AND products.Price < ?  ' . $categoriesMysql . $sortingCheck
            );
-        // Подготавливаем и подставляем данные получаем асоциативный масив и возрашаем его
+        // We prepare and substitute the data, get an associative array and return it
         $stm = self::$db->prepare($sql);
         $stm->execute($priceArr);
         return $stm->fetchAll(PDO::FETCH_ASSOC) ?: [];
@@ -50,9 +48,8 @@ class Shop extends Model
 
     public function getOrder(array $order): array
     {
-        // Подсчитываем сколько в масиве значений
+        // Count how many values are in the array
         $numberArr = count($order);
-        // с помощю цикла получаем знаки вопроса для sql иньекции
         $i = 1;
         $str = ', ?';
         $mark  = '';
@@ -60,19 +57,16 @@ class Shop extends Model
             $mark .=  $str;
             $i++;
         }
-        // убираем первую запятую
+        // Remove the first comma
         $markArr = substr($mark, 1);
 
-        // формирует запрос и подвляем туда знаки вопроса
+        // Forms a query and puts question marks there
         $sql = sprintf('SELECT ProductName, Picture, Price FROM products WHERE Product_id IN (' . $markArr .')');
 
-        // подключение к пдо и у него в свойствах мы подготавливаем запрос
+        // Connection to pdo and in its properties we prepare a request
         $stm = self::$db->prepare($sql);
-        // передает параметр вместо ?
+        // Passes parameter instead of ?
        $stm->execute($order);
-        // если вернется фолс, то ретурн пустой масив
         return $stm->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
-
-
 }

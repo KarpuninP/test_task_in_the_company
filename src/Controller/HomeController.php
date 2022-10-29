@@ -10,11 +10,11 @@ class HomeController extends Controller
   {
       $data = [];
       $this-> setMeta (
-          'Главная страница',
-          'Тестовое задание',
-          'тест, интернет магазин'
+          'Main page',
+          'Test task',
+          'test, online store, filters'
       );
-      // возвращает к подключению шаблон и передача данных
+      // Returns the template to the connection and data transfer
       $this->view('main.main', $data);
   }
 }

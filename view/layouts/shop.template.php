@@ -8,11 +8,11 @@
         <!--jquery ui-->
         <link href="/css/jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
         <!--style-->
-         <link href="/css/style1.css" rel="stylesheet" type="text/css" media="all" />
+         <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
         <div class="color">
-    <!-- верхушка сайта, оглавление, менюшка -->
+    <!-- header -->
             <header>
                 <div class="container">
                     <nav class="navbar ">
@@ -31,18 +31,18 @@
                 </div>
             </header>
 
-            <!-- середина, она и будет менятся-->
+            <!-- Main -->
             <?=$content;?>
 
         </div>
-        <!-- Подняться  верх -->
+        <!-- Up button -->
         <div class="position-relative text-user ">
             <p class="position-absolute bottom-0 end-0">
                 <a  href="#">Up</a>
             </p>
         </div>
 
-        <!-- Подвал -->
+        <!-- Footer -->
         <footer>
             <div class="navbar-fixed-bottom row-fluid bg-dark p">
                 <div class="navbar-inner">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </footer>
-        <!-- модальное окно старт-->
+        <!-- Modal window-->
         <div class="modal fade " id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <!-- подключение js -->
+        <!-- Сonnection js -->
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery-3.6.1.min.js"></script>
         <script src="js/jquery-ui.js"></script>

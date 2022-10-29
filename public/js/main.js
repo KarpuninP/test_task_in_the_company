@@ -1,16 +1,15 @@
-// Создаем переменные для работы
 let sorting_data = '';
     categories_array = [];
     price_array =[0,2100];
     size_clicked = '';
     id_array = [];
 
-// Когда страница полностью загружена срабатывает этот код
+// When the page is fully loaded, this code is executed
 $(document).ready(function () {
-// подключаемся к api и получаем json
+// Сonnect to api and get json
     getJSON('/api');
 
-// слайдер цены
+// price slider
     $( "#slider-range" ).slider({
         range: true,
         min: 0,
@@ -24,45 +23,39 @@ $(document).ready(function () {
             price_array = [ui.values[ 0 ], ui.values[ 1 ]];
         }
     });
-    // Вывод цены слайдера 'Price range:'
+    // Inference price range
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" +
         $( "#slider-range" ).slider( "values", 1 ));
 
-//  При нажатие на фильтры срабатывают события
+//  When clicking on filters, events are triggered
     $(".filters, .ui-corner-all").click(function () {
-// Сортировка
-        // Выбрана засовывается значение в переменную
+// Sorting
         sorting_data = $('#sorting :selected').val();
 
-// категории
-         size_clicked = $(this).attr("data-filter"); // при выборе будет закидыватся атрибут сюда
-         if ($(this).is(":checked")) {  // идет проверка если выбран то кидаем сюда
-             // как то добавить сюда ключ типа checkbox
-             categories_array.push(size_clicked);  // добовляем в конец масива то что выбрал
+// Categories
+         size_clicked = $(this).attr("data-filter");
+         if ($(this).is(":checked")) {
+             categories_array.push(size_clicked);
         } else {
-             //Галочку убрали то удоляем
              categories_array = categories_array.filter(function (elem) {
                  return elem !== size_clicked;
              });
          }
-         // Форимруем Гет запрос в url с выбраными параметрами
+         // Create url
          let url = '?sorting=' + sorting_data + '&price=' + price_array + '&categories=' + categories_array;
-        // console.log(url); // смотрим что получилось
-        // Запускаем функцию по получение JSON с гет параметрами
+        // console.log(url);
         getJSON('/api/' + url);
-        // проверяем что в фильтрах
+
         // console.log(categories_array);
         //  console.log(sorting_data);
         // console.log(price_array);
     });
 });
 
-// Функция по получение и отображению товаров через json
+// Function for receiving and displaying goods via json
 function getJSON(url){
-        // Получаем сылку перехода и
         $.getJSON(url, function(json) {
-            // console.log(json); // проверка
-            // Проходимся по масиву циклом и подставляем данные
+            // console.log(json);
             let count = json.length;
             let a = '';
             for (product of json) {
@@ -70,22 +63,18 @@ function getJSON(url){
                      a = a+b;
             }
 
-            // Вставляем html код на страницу
+            // Inserting html code into a page
             $('.product-grids').html(a);
-            // Вставляем подсчет сколько у нас товаров на боковую фильтр цен
+            // We insert the count of how many products we have on the side price filter
             $('p span').text(count);
-            // спрятали все
+            // Hide everything
              $('.card-text').hide()
 
-// При нажатие на сылку она раздвигает информация о товаре
-            // при нажатие срабатывает событие. Отменяем действие перехода. Получаем id поста на который нажали - это
-            // будет у нас класс для обрашение к посту. Проверяем через консоль что все работает
+// When you click on the link, it expands the information about the product
             $('.more').click(function (e) {
                 e.preventDefault();
                 let idPost =  '.' + $(this).attr('data-info') ;
                 //console.log(idPost);
-                // Проверяем если текст 'more...' то мы показываем дескрипшон, меняем текст на 'hide'.
-                // Иначе прячем и ставим опять more...
                 if($(this).text() === 'more...'){
                     $(idPost).show(500);
                     $(this).text('hide');
@@ -104,45 +93,36 @@ function getJSON(url){
         });
 
 }
-// Функция для карзины в модальное окно
+// Function for cart in modal window
 function cart(id) {
-    // Если новый айдишник то он добовляется в конце масива
     if (!id_array.includes(id)) {
         id_array.push(id);
     }
-    // Формируем URL
     let url = '/api/cart?order=' + id_array;
     // console.log(url)
-    // Получаем JSON фаил и обрабатываем его. Выводим проходясь по масиву и подставляем все
     $.getJSON(url, function(json) {
-        // console.log(json); // проверка
-        // Проходимся по масиву циклом и подставляем данные
+        // console.log(json);
         let a = '';
         for (product of json) {
             b = ' <tr><td><img src="pic/mob/' + product.Picture + '" alt="Product photo"  height="50px"></td><td>' + product.ProductName + '</td><td>' + product.Price + '</td></tr>';
             a = a + b;
         }
         // console.log(a);
-        // Вставляем html код на страницу
+        // Inserting html code into a page
         $('.cart-show').html(a);
     });
 
-    // При нажатие на кнопку заказать в модальном окне мы отправляем заказ на сервер. Находится в функции карт - если корзина пустая то он не отправляет
+    // When you click on the order button in the modal window, we send the order to the server. Located in the cards function - if the cart is empty, then it does not send
     $('.modal-footer #order').click(function () {
         // console.log(id_array);
         $.ajax({
             url: '/order/',
-            // запрос на id  товара
             data: {id: id_array},
             type: 'POST',
-            // принимает ответ
             success: function(res){
-                // обновляем модальное окно
                 // console.log(res)
-                // Переход на страничку заказа
                  window.location.href = '/order/';
             },
-            // а случии ошибки то делаем ошибку
             error: function(){
                 alert('Error!');
             }

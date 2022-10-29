@@ -11,7 +11,7 @@ abstract class Model
 
     public function __construct()
     {
-        // подключаем пдо
+        // Connect pdo
         self::$db = Db::getDb();
     }
 

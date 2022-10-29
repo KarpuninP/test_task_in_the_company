@@ -1,15 +1,11 @@
-<!-- Если надо передать пораметры через контролер то вот так их получать-->
-<!--<//?=$siteData['a'];?>-->
-
 <?php //var_dump($siteData);?>
-<!-- середина, она и будет менятся-->
 <main>
     <div class="container">
         <div class="row main-body">
-            <!-- фильтры-->
+            <!-- Filters-->
             <div class="col-3 " >
                 <div class="main-filter">
-                    <!-- сортировка -->
+                    <!-- Sorting -->
                     <div class="sorting box">
                         <label for="sorting">Sorting</label>
                         <select class="form-select filters" id="sorting" aria-label="Default select example">
@@ -19,7 +15,7 @@
                             <option  value="3" id="sorting3" >Novelties</option>
                         </select>
                     </div>
-                    <!-- карусель цен -->
+                    <!-- Price carousel -->
                     <div class="price box">
                         <p>
                             <label for="amount">Price range:</label>
@@ -28,7 +24,7 @@
                         <div id="slider-range"></div>
                         <p style="margin-top: 5px ">Selected <span> </span> </p>
                     </div>
-                    <!-- категории -->
+                    <!-- Categories -->
                     <div class="categories box">
                         <div class="ram-filter">
                             <label class="form-check-label" for="flex1">
@@ -88,7 +84,6 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="color-filter">
                             <label class="form-check-label" for="flex3">
                                 Color
@@ -118,7 +113,6 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="resolution-filter">
                             <label class="form-check-label" for="flex4">
                                 Resolution
@@ -148,53 +142,12 @@
                                 </label>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-            <!-- товары-->
-            <div class="col-9 n">
-                <div class="product-grids">
-
-
-<!--                        <div class="card" style="width: 18rem;">-->
-<!--                            <img src="pic/mob/" class="card-img-top" alt="..."  height="350px">-->
-<!--                            <div class="card-body">-->
-<!--                                <h5 class="card-title product-name"></h5>-->
-<!--                                <h6 class="card-title product-price" style="color: #dc3545">Цена: <span class="product-price"></span></h6>-->
-<!--                                <h7 class="card-title product-ram">RAM: <span class="product-ram"></span></h7><br>-->
-<!--                                <h7 class="card-title product-color">Цвет: <span class="product-color"></span></h7><br>-->
-<!--                                <h7 class="card-title product-manufacturer">Марка: <span class="product-manufacturer"></span></h7><br>-->
-<!--                                <h7 class="card-title product-display">Разрешение: <span class="product-display"></span></h7>-->
-<!--                                <p class="card-text product-description"></p><br>-->
-<!--                                <p class="card-text product-data"><b>Дата добовление товара: <span></span></b></p>-->
-<!--                                <a href="#" class="btn btn-primary">Add to cart</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-
-
-<!--                    --><?php //foreach ($siteData as $data) { ?>
-<!--                        <div class="card" style="width: 18rem;">-->
-<!--                            <img src="pic/mob/--><?//= $data['Picture'];?><!--" class="card-img-top" alt="..."  height="350px">-->
-<!--                            <div class="card-body">-->
-<!--                                <h5 class="card-title product-name">--><?//= $data['ProductName'];?><!--</h5>-->
-<!--                                <h6 class="card-title product-price" style="color: #dc3545">Цена: --><?//= $data['Price'];?><!--</h6>-->
-<!--                                <h7 class="card-title product-ram">RAM: --><?//= $data['RAM_name'];?><!--</h7><br>-->
-<!--                                <h7 class="card-title product-color">Цвет: --><?//= $data['Color_name'];?><!--</h7><br>-->
-<!--                                <h7 class="card-title product-manufacturer">Марка: --><?//= $data['Manufacturer_name'];?><!--</h7><br>-->
-<!--                                <h7 class="card-title product-display">Разрешение: --><?//= $data['Display_name'];?><!--</h7>-->
-<!--                                <p class="card-text">--><?//= $data['Description'];?><!-- <br><b>Дата добовление товара: --><?//= $data['Date'];?><!--</b></p>-->
-<!--                                <a href="#" class="btn btn-primary">Add to cart</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    --><?php //} ?>
-
-
-                </div>
+            <!-- Products-->
+            <div class="col-9">
+                <div class="product-grids"></div>
             </div>
         </div>
     </div>

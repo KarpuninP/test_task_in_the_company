@@ -7,30 +7,29 @@ use App\Utils\Base\Controller;
 
 class ApiController extends Controller
 {
-    // Получение данных от фильтра и вывод json формата
+    // Getting data from the filter and outputting json format
     public function index(): void
     {
         // Перевод в json
-//        header('Content-type: json/application');
+       header('Content-type: json/application');
 
 // ?sorting=3&price=93,2100&categories=r:1,r:2,r:3,r:4,m:1,m:2,m:3,m:4,c:1,c:2,c:3,c:4,d:1,d:2,d:3,d:4
 //        var_dump($_GET);
 //        var_dump( $_SESSION['getParam']);
 
-        // Добовляем в сессию гет параметр, что бы при перезагрузки сохранился результат
+        // Add a get parameter to the session so that the result is saved upon reboot
         if (!empty($_GET) & $_GET != $_SESSION['getParam']) {
             $_SESSION['getParam'] = $_GET;
         }else {
             $_SESSION['getParam'] = '?sorting=0&price=0,2100&categories=';
         }
 
-        // валидация
-        // Проверка сушествует ли строка, если нет то даем пустую строку
+        // validation
         $sorting = $_SESSION['getParam']['sorting'] ?? '';
         $price = $_SESSION['getParam']['price'] ?? '';
         $categories = $_SESSION['getParam']['categories'] ?? '';
 
-        // Сортировка цен
+        // Price sorting
         $sortingCheck = '';
         if($sorting == 1){
             $sortingCheck = 'ORDER BY products.Price ASC';
@@ -41,8 +40,7 @@ class ApiController extends Controller
         }
 //        var_dump($sortingСheck);
 
-        // работа с ценой
-        // переводим в масив
+        // Work with the price
         $priceArr = explode(',' , $price);
         foreach ($priceArr as $v){
             if(!is_numeric($v)){
@@ -51,15 +49,15 @@ class ApiController extends Controller
         }
         //var_dump($priceArr);
 
-        // фильтры
+        // Filters
         $categoriesArr = explode(',' , $categories);
         $categoriesArrCheck = [];
         foreach ($categoriesArr as $v) {
-            // Берем первую букву
+            // Take the first letter
             $checkThemeK = substr($v, 0, 1);
-            // Берем число (последнию) и проверяем на число, если не число возрашает тру
+            // We take the number (last) and check for a number, if not a number returns true
             $checkThemeV = !is_numeric(substr($v, 2, 1)) ? '': substr($v, 2, 1);
-            // Создаем масив с выбраными товарами
+            // Create an array with selected products
             if ($checkThemeV !== '') {
                 if ($checkThemeK == 'r') {
                     $categoriesArrCheck['RAM_id'][] = $checkThemeV;
@@ -74,15 +72,15 @@ class ApiController extends Controller
         }
 //        var_dump($categoriesArrСheck);
 
-        // Передаем весь запрос в бд
+        // Passing the entire request to the database
         $arr= $this->db->getAllSort($sortingCheck, $priceArr, $categoriesArrCheck);
 
 //        debug($arr);
-        // Выводим ответ в качестве json
+        // Output response as json
         echo $this->addJson($arr);
     }
 
-    // Кешируем результат
+    // Caches the result
     public function addJson(array $arr): string
     {
         $str = json_encode($arr);
@@ -92,25 +90,17 @@ class ApiController extends Controller
 
     public function cart(): void
     {
-
-        // Перевод в json
+        // Translation to json
         header('Content-type: json/application');
 //        http://localhost/api/cart?order=1,2,3,6
 //        var_dump($_GET);
-        //  тут можно куки поставить
         $order = $_GET['order'] ?? '';
-        // Переводим все в масив
         $orderArr = explode(',', $order);
 //        var_dump($orderArr);
         $cart = $this->db->getOrder($orderArr);
 
 //        debug($cart);
-        // Выводим ответ в качестве json
+        // Output response as json
        echo json_encode($cart);
     }
-
-
-
-
-
 }
