@@ -1,0 +1,96 @@
+body {
+    background: #212529;
+}
+.color {
+    background: #DCDCDC;
+    padding: 50px 0;
+}
+header .navbar {
+    background: #F5F5F5;
+    border: 3px solid #25221B;
+    border-radius: 30px;
+}
+header .navbar .navbar-brand img {
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+header .cart {
+    text-decoration: none;
+    color: #2A2A2A;
+}
+header .cart img {
+    margin-left: 1px;
+}
+
+header h1 {
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 2px 2px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 1.5em;
+}
+
+main .main-body {
+    margin-top: 50px;
+}
+
+main .main-filter {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+main .box {
+    background: #FFFAFA;
+    margin-top: 60px;
+    padding: 40px;
+    border-radius: 30px;
+}
+
+main .ram-filter, .manufacturer-filter, .color-filter, .resolution-filter {
+    margin-top: 15px;
+}
+
+main .product-grids {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100%;
+}
+main .card {
+    margin-bottom: 10px;
+}
+.text-user {
+    left: -3px;
+}
+
+.text-user a {
+    text-decoration: none;
+    border: 3px solid #ffffff;
+    border-radius: 20px ;
+    color: #fff;
+    padding: 10px 20px;
+    transition: .3s;
+    background-color: #252525;
+}
+.text-user a:hover {
+    background: #E1E1E1;
+    box-shadow: 0 0 6px 1px #cccc ;
+    color: #2A2A2A;
+}
+
+footer .navbar-inner {
+    margin-top: 30px;
+    padding: 50px;
+}
+footer a {
+    text-decoration: none;
+    color: #F5F5F5;
+}
+footer a:hover {
+    background-color: black;
+    color: white;
+    padding: 3px;
+    border-radius: 20px;
+}
